@@ -21,7 +21,6 @@ int main() {
     
     sfRenderWindow* window;
     sfVideoMode mode = {WIDTH, HEIGHT, 32};
-
     management_window(mode,window);
 
     return 0;

@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <SFML/Audio.h>
 #include <SFML/Graphics.h>
+#include <math.h>
 
 
 
@@ -35,6 +36,24 @@ void window_rectangle(sfRectangleShape* rectangle) {
     sfRectangleShape_setOutlineColor(rectangle, sfWhite);
 }
 
+void window_trace_courbe(sfVideoMode mode, sfVertex vertex, sfVertexArray* vertex_array) {
+    
+    int i;
+
+    for (i = 0; i < (int)mode.width; i++)
+    {
+        float x = (float)i / mode.width* 2 * M_PI;
+        float y = sinf(x) * mode.height / 2 + mode.height / 2;
+
+        vertex.position.x = (float)i;
+        vertex.position.y = y;
+        vertex.color = sfWhite;
+        sfVertexArray_append(vertex_array, vertex);
+    }
+}
+
+
+
 void window_event(sfRenderWindow* window) {
 
     sfEvent event;
@@ -50,7 +69,8 @@ void window_event(sfRenderWindow* window) {
     }
 }
 
-void window_display(sfRenderWindow* window, sfText* text,sfRectangleShape* rectangle) {
+void window_display(sfRenderWindow* window, sfText* text,sfRectangleShape* rectangle, sfVertexArray* vertex_array) {
+       
             /* Clear the screen */
         sfRenderWindow_clear(window, sfBlack);
 
@@ -59,30 +79,31 @@ void window_display(sfRenderWindow* window, sfText* text,sfRectangleShape* recta
 
         // Dessine le rectangle
         sfRenderWindow_drawRectangleShape(window, rectangle, NULL);
+
+        // Tracer courbe
+        sfRenderWindow_drawVertexArray(window, vertex_array, NULL);
         
         // Afficher le résultat
         sfRenderWindow_display(window);
+}float map(float a, float E1min,float E1max, float E2min, float E2max)
+{
+    return (a-E1min)*((E2max-E2min)/(E1max-E1min))+E2min;
 }
-
-void management_window(sfVideoMode mode,sfRenderWindow* window) {
+Shape_create();
+    sfVertexArray* vertex_array = sfVertexArray_create();
+    sfVertex vertex;
     
-    
-    window = sfRenderWindow_create(mode, "SFML window", sfDefaultStyle, NULL);
-    sfFont* font = sfFont_createFromFile("arial.ttf");;
-    sfText* text = sfText_create();
-    sfRectangleShape* rectangle = sfRectangleShape_create();
-
-
     if(window !=NULL)
     {
         /* Start the game loop */
         window_title(text,font);
         window_rectangle(rectangle);
+        window_trace_courbe(mode,vertex,vertex_array);
 
         while (sfRenderWindow_isOpen(window)) {
 
             window_event(window);
-            window_display(window,text,rectangle);   
+            window_display(window,text,rectangle,vertex_array);   
 
             }            
 
@@ -91,5 +112,6 @@ void management_window(sfVideoMode mode,sfRenderWindow* window) {
     sfText_destroy(text);
     sfFont_destroy(font);
     sfRectangleShape_destroy(rectangle);
+    sfVertexArray_destroy(vertex_array);
     sfRenderWindow_destroy(window);
 }
