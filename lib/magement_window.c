@@ -11,13 +11,14 @@
 #include <SFML/Audio.h>
 #include <SFML/Graphics.h>
 #include <math.h>
+#include <my_courbe.h>
 
 
 
 
 void window_title(sfText* text, sfFont* font) {
 
-    sfText_setString(text, "Polynome du second degre");
+    sfText_setString(text, "Fonction Sinus");
     printf("Coucou");
     sfText_setFont(text, font);
     sfText_setCharacterSize(text, 24);
@@ -39,14 +40,16 @@ void window_rectangle(sfRectangleShape* rectangle) {
 void window_trace_courbe(sfVideoMode mode, sfVertex vertex, sfVertexArray* vertex_array) {
     
     int i;
+    float x = -3.14;
+    float nb;
 
-    for (i = 0; i < (int)mode.width; i++)
+    nb=500;
+
+    for (i=0; i<nb; i++)
     {
-        float x = (float)i / mode.width* 2 * M_PI;
-        float y = sinf(x) * mode.height / 2 + mode.height / 2;
-
-        vertex.position.x = (float)i;
-        vertex.position.y = y;
+        x = x+ 6.28/nb;
+        vertex.position.x = map(x,-3.14,3.14,100,700);
+        vertex.position.y = map(sin(x),-1,1,100,500);
         vertex.color = sfWhite;
         sfVertexArray_append(vertex_array, vertex);
     }
@@ -85,11 +88,17 @@ void window_display(sfRenderWindow* window, sfText* text,sfRectangleShape* recta
         
         // Afficher le résultat
         sfRenderWindow_display(window);
-}float map(float a, float E1min,float E1max, float E2min, float E2max)
-{
-    return (a-E1min)*((E2max-E2min)/(E1max-E1min))+E2min;
 }
-Shape_create();
+
+
+
+void management_window(sfVideoMode mode,sfRenderWindow* window) {
+    
+    
+    window = sfRenderWindow_create(mode, "SFML window", sfDefaultStyle, NULL);
+    sfFont* font = sfFont_createFromFile("arial.ttf");;
+    sfText* text = sfText_create();
+    sfRectangleShape* rectangle = sfRectangleShape_create();
     sfVertexArray* vertex_array = sfVertexArray_create();
     sfVertex vertex;
     
