@@ -24,6 +24,7 @@ int main() {
     sfVertexArray* vertex_array = sfVertexArray_create();
     Polynome *poly = malloc(sizeof(Polynome));
     Range *rge = malloc(sizeof(Range));
+    Graph_ecran *ecran = malloc(sizeof(ecran));
 
     init_second(poly);
     input_data(poly);
@@ -31,11 +32,13 @@ int main() {
     affiche_result(poly);
 
     init_range(rge);
-    window_trace_courbe(mode,vertex_array,poly,R);
+    init_graph_ecran(ecran);
+    window_trace_courbe(mode,vertex_array,poly,rge,ecran);
     window_affiche(mode,window, vertex_array);
 
     destroy_second(poly);
     destroy_range(rge);
+    destroy_Graph_ecran(ecran);
  
     return 0;
 }

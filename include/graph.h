@@ -12,13 +12,20 @@ typedef struct Range
     float xmax;
     float ymin;
     float ymax;
+} Range;
+
+typedef struct Graph_ecran
+{
+    /* data */
     float xminEcran;
     float xmaxEcran;
     float yminEcran;
     float ymaxEcran;
-} Range;
-
+} Graph_ecran;
 
 #ifndef graph
-    void init_range(Range*R);
+    void init_range(Range *rnge);
+    void init_graph_ecran(Graph_ecran *ecran);
+    void destroy_Graph_ecran(Graph_ecran *ecran);
+    int test_ecran(int xecran, int yecran, Graph_ecran *ecran);
 #endif
