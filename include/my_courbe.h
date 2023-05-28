@@ -6,6 +6,6 @@
 ** Header Window
 */
 
-#ifndef my_window
-    float map(float a,float xmin, float xmax, float ymin, float ymax);
+#ifndef my_courbe
+    float map(float a,float val_min, float val_max, float Ecran_min, float Ecran_max);
 #endif
