@@ -15,18 +15,12 @@
 
 void window_affiche(sfVideoMode mode,sfRenderWindow* window, sfVertexArray* vertex_array) {
     
-    // [23/05/23] penser à rendre indépendant le tracer de courbe en passant vertex_array en parametre
+    // [23/05/23] penser à rendre indépendant le tracer de courbe en passant vertex_array en parametre ==> done 01/06/23
     
-    window = sfRenderWindow_create(mode, "SFML window", sfDefaultStyle, NULL);
+    window = sfRenderWindow_create(mode, "Tracer graph", sfDefaultStyle, NULL);
     sfFont* font = sfFont_createFromFile("arial.ttf");
     sfText* text = sfText_create();
     sfRectangleShape* rectangle = sfRectangleShape_create();
-
-    //sfVector2f start = {100, 100};
-    //sfVector2f end = {500, 400};
-    //sfColor color = sfWhite;
-    
-
 
 
     if(window !=NULL)
@@ -38,7 +32,6 @@ void window_affiche(sfVideoMode mode,sfRenderWindow* window, sfVertexArray* vert
         while (sfRenderWindow_isOpen(window)) {
 
             window_event(window);
-            //sfRenderWindow_drawLine(window, start, end, color);
             window_display(window,text,rectangle,vertex_array);   
 
             }            
