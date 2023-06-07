@@ -16,7 +16,7 @@
 
 void window_title(sfText* text, sfFont* font) {
 
-    sfText_setString(text, "Fonction Polynome du second degre");
+    sfText_setString(text, "Polynome du second degre");
     sfText_setFont(text, font);
     sfText_setCharacterSize(text, 24);
     sfText_setFillColor(text, sfWhite);

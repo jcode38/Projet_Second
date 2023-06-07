@@ -35,30 +35,65 @@ void window_trace_courbe(sfVideoMode mode, sfVertexArray* vertex_array, Polynome
     // prevoir un calcul de min et max du polynome?
 
     float x = rng->xmin;
+    float y = rng->ymin;
     int xecran, yecran;
-    float nb = 500;
+    float nb = 5000;
     sfVertex vertex;
 
-
-    for (int i=0; i<=nb; i++)
-    {
+    for (int i=0; i<=nb; i++) {
         xecran = (int)map(x,rng->xmin,rng->xmax,ecran->xminEcran,ecran->xmaxEcran);
         yecran = (int)map((float)eval_polynome(poly,x),-rng->ymin,-rng->ymax,ecran->yminEcran,ecran->ymaxEcran); 
         
         if (test_ecran(xecran,yecran,ecran)==1) {
-            vertex.position.x = (int)map(x,rng->xmin,rng->xmax,ecran->xminEcran,ecran->xmaxEcran);
-            vertex.position.y = (int)map((float)eval_polynome(poly,x),-rng->ymin,-rng->ymax,ecran->yminEcran,ecran->ymaxEcran); 
+            vertex.position.x = xecran;
+            vertex.position.y = yecran;
             vertex.color = sfWhite;
             sfVertexArray_append(vertex_array, vertex);
         }
-        x = x+ 20/nb;
+        x = x+ (rng->xmax-rng->xmin)/nb;
     }
+
+    window_trace_repere(vertex_array,rng,ecran);
+
 }
 
 
-void window_trace_repere(sfVideoMode mode, sfVertexArray* vertex_array, Polynome *poly, Range *rng, Graph_ecran *ecran) {
-    // Tracer le repere xy soit avec VertexArray et donc ici ou avec Drawline et alors devrait être dans management window
-    // TBD
+void window_trace_repere(sfVertexArray* vertex_array, Range *rng, Graph_ecran *ecran) {
+
+
+    // attente de modification pour implémenter cette fonction
+    float x = rng->xmin;
+    float y = rng->ymin;
+    int xecran, yecran;
+    float nb = 5000;
+    sfVertex vertex;
+    
+    for (int i=0; i<=nb; i++) {
+        xecran = (int)map(x,rng->xmin,rng->xmax,ecran->xminEcran,ecran->xmaxEcran);
+        yecran = (int)map(0,-rng->ymin,-rng->ymax,ecran->yminEcran,ecran->ymaxEcran); 
+        if (test_ecran(xecran,yecran,ecran)==1) {
+            vertex.position.x = xecran;
+            vertex.position.y = yecran;
+            vertex.color = sfWhite;
+            sfVertexArray_append(vertex_array, vertex);
+        }
+
+        x =  x + (rng->xmax-rng->xmin)/nb;
+    }
+
+    for (int i=0; i<=nb; i++) {
+        xecran = (int)map(0,rng->xmin,rng->xmax,ecran->xminEcran,ecran->xmaxEcran);
+        yecran = (int)map(y,-rng->ymin,-rng->ymax,ecran->yminEcran,ecran->ymaxEcran); 
+        if (test_ecran(xecran,yecran,ecran)==1) {
+            vertex.position.x = xecran;
+            vertex.position.y = yecran;
+            vertex.color = sfWhite;
+            sfVertexArray_append(vertex_array, vertex);
+        }
+
+        y = y + (rng->ymax-rng->ymin)/nb;
+    }
+   
 
 }
 

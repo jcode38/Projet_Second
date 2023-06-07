@@ -34,6 +34,7 @@ int main() {
     init_range(rge);
     init_graph_ecran(ecran);
     window_trace_courbe(mode,vertex_array,poly,rge,ecran);
+    window_trace_repere(vertex_array,rge,ecran);
     window_affiche(mode,window, vertex_array);
 
     destroy_second(poly);
